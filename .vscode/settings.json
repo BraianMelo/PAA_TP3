@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "forca_bruta.h": "c",
+        "string.h": "c"
+    }
+}
