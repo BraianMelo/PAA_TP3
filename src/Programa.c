@@ -8,7 +8,7 @@
 #include "../include/BMH.h"
 #include "../include/KMP.h"
 
-#define N 1024 // Tamanho maximo da String
+#define N 1000000 // Tamanho maximo da String
 #define M 10 // Tamanho maximo da sub String
 
 int main(int argc, char *argv[]){
@@ -39,6 +39,8 @@ int main(int argc, char *argv[]){
   
   fscanf(arquivo_entrada, "%d", &K);
 
+  bool resultado = false;
+
   for (int i = 0; i < K; ++i) {
     fscanf(arquivo_entrada, "%d", &inicio_intervalo);
     fscanf(arquivo_entrada, "%d", &fim_intervalo);
@@ -46,7 +48,12 @@ int main(int argc, char *argv[]){
     inicio_intervalo -= 1;
     fim_intervalo -= 1;
 
-    bool resultado = false;
+    if(!Testar_Intervalo(string, sub_string, inicio_intervalo, fim_intervalo)){ // Aumenta bastante o tempo
+      fprintf(arquivo_saida, "%d ate %d: Intervalo Invalido! \n", inicio_intervalo, fim_intervalo);
+      continue;
+    }
+
+    resultado = false;
 
     switch (tipo) {
       case 'F': // Forca bruta

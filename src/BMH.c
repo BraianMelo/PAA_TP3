@@ -14,27 +14,25 @@ bool BMH(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     for (int i = 0; i < ALFABETO; ++i) {
         d[i] = m;
     }
-
-
     for (int i = 0; i < m - 1; ++i) {
         d[(unsigned char)sub_string[i]] = m - i - 1;
     }
 
-    int j = m;
-    while (j <= n) { // Buscando a sub_string
-        int k = j + ini_intervalo - 1;
-        int i = m;
+    int j = m - 1 + ini_intervalo;
+    while (j <= fim_intervalo) { // Buscando a sub_string
+        int k = j;
+        int i = m - 1;
 
-        while (i > 0 && string[k - 1] == sub_string[i - 1]) {
+        while (i >= 0 && string[k] == sub_string[i]) {
             --k;
             --i;
         }
 
-        if (i == 0) { // Achou a sub_string
+        if (i < 0) { // Achou a sub_string
             return true;
         }
 
-        j += d[(unsigned char)string[j + ini_intervalo - 2]];
+        j += d[(unsigned char)string[j]];
     }
 
     return false;

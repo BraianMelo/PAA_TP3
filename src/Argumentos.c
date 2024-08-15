@@ -39,6 +39,22 @@ bool Receber_Argumentos(int argc, char *argv[], char *tipo, char **caminho_arq_e
     return true;
 }
 
+bool Testar_Intervalo(char *string, char *sub_string, int inicio_intervalo, int fim_intervalo) {
+    int tam_string = strlen(string);
+    int tam_sub_string = strlen(sub_string);
+
+    if (inicio_intervalo < 0 || fim_intervalo >= tam_string) 
+        return false;
+
+    int tam_intervalo = fim_intervalo - inicio_intervalo + 1;
+
+    if (tam_intervalo <= 0 || tam_intervalo < tam_sub_string)
+        return false;
+
+    return true;
+}
+
+
 bool Abrir_Arquivos(char **caminho_arq_entrada, FILE **arquivo_entrada, FILE **arquivo_saida)
 {
 

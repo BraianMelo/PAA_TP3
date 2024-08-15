@@ -1,25 +1,23 @@
 #include "../include/Forca_Bruta.h"
 
-bool Forca_Bruta(char *string, char *sub_string, int ini_intervalo, int fim_intervalo){
+bool Forca_Bruta(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     int tam_string = strlen(string);
     int tam_sub_string = strlen(sub_string);
 
-    int aux = 0;
+    // Verifica se o intervalo e o tamanho da sub-string são válidos
+    if (tam_sub_string > (fim_intervalo - ini_intervalo + 1)) {
+        return false;
+    }
 
-    for(int i = ini_intervalo; i < fim_intervalo; ++i){ //Itera pela String no intervalo
-        if(string[i] == sub_string[0]){ // Se o 1° caractere da string for igual ao 1° da sub_string
-            aux = i + 1;
-
-            for(int j = 1; j < tam_sub_string; ++j){ // Itera a partir daquele caractere para ver se a sub_string esta presente
-                if(string[aux] != sub_string[j])
-                    break;
-                
-                ++aux;
-                if(j + 1 == tam_sub_string){ // Todos os caracteres são iguais. Achou a sub string!
-                    return true;
-                }
+    for (int i = ini_intervalo; i <= fim_intervalo - tam_sub_string + 1; ++i) { // Itera pela String no intervalo
+        int j;
+        for (j = 0; j < tam_sub_string; ++j) { // Verifica se a sub_string está presente
+            if (string[i + j] != sub_string[j]) {
+                break;
             }
-            aux = 0;
+        }
+        if (j == tam_sub_string) { // Todos os caracteres são iguais. Achou a sub-string!
+            return true;
         }
     }
 
