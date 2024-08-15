@@ -9,9 +9,9 @@
     typedef struct timeval timeval;
     typedef struct rusage rusage;
 
-    void iniciar_contagem(struct timeval *ini_tempo_total, struct rusage *inicio);
-    void parar_contagem(struct timeval *fim_tempo_total, struct rusage *fim);
-    void printar_tempo_gasto(struct timeval *ini_tempo_total, struct rusage *inicio, struct timeval *fim_tempo_total, struct rusage *fim);
+    void Iniciar_Contagem(struct timeval *ini_tempo_total, struct rusage *inicio);
+    void Parar_Contagem(struct timeval *fim_tempo_total, struct rusage *fim);
+    void Imprimir_Tempo_Gasto(struct timeval *ini_tempo_total, struct rusage *inicio, struct timeval *fim_tempo_total, struct rusage *fim);
 
     float diffUserTime(struct rusage *inicio, struct rusage *fim);
     float diffSystemTime(struct rusage *inicio, struct rusage *fim);

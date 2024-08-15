@@ -3,6 +3,10 @@
         "forca_bruta.h": "c",
         "string.h": "c",
         "stdio.h": "c",
-        "kmp.h": "c"
+        "kmp.h": "c",
+        "bmh.h": "c",
+        "stdbool.h": "c",
+        "tempo.h": "c",
+        "string": "c"
     }
 }

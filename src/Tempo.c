@@ -1,16 +1,16 @@
 #include "../include/Tempo.h"
 
-void iniciar_contagem(struct timeval *ini_tempo_total, struct rusage *inicio){
+void Iniciar_Contagem(struct timeval *ini_tempo_total, struct rusage *inicio){
     gettimeofday(ini_tempo_total, NULL);
     getrusage(RUSAGE_SELF, inicio);
 }
 
-void parar_contagem(struct timeval *fim_tempo_total, struct rusage *fim){
+void Parar_Contagem(struct timeval *fim_tempo_total, struct rusage *fim){
     getrusage(RUSAGE_SELF, fim);
     gettimeofday(fim_tempo_total, NULL);
 }
 
-void printar_tempo_gasto(struct timeval *ini_tempo_total, struct rusage *inicio, struct timeval *fim_tempo_total, struct rusage *fim) {
+void Imprimir_Tempo_Gasto(struct timeval *ini_tempo_total, struct rusage *inicio, struct timeval *fim_tempo_total, struct rusage *fim) {
     printf("Tempo total decorrido: %.06f segundos\n", diffRealTime(ini_tempo_total, fim_tempo_total));
     printf("Tempo de CPU: %.06f segundos\n", diffSystemTime(inicio, fim));
     printf("Tempo de usuário: %.06f segundos\n", diffUserTime(inicio, fim));

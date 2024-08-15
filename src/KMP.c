@@ -1,6 +1,6 @@
 #include "../include/KMP.h"
 
-void calcular_prefixo(char *sub_string, int m, int *prefixo) {
+void Construir_Tabela_Prefixo(char *sub_string, int m, int *prefixo) {
     int j = 0;
     prefixo[0] = 0;
 
@@ -17,7 +17,7 @@ void calcular_prefixo(char *sub_string, int m, int *prefixo) {
     }
 }
 
-bool kmp(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
+bool KMP(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     int m = strlen(sub_string);
     int n = fim_intervalo - ini_intervalo + 1;
 
@@ -27,7 +27,7 @@ bool kmp(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     }
 
     int prefixo[m];
-    calcular_prefixo(sub_string, m, prefixo);
+    Construir_Tabela_Prefixo(sub_string, m, prefixo);
 
     int j = 0;
     for (int i = ini_intervalo; i <= fim_intervalo; ++i) {
@@ -39,7 +39,7 @@ bool kmp(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
             ++j;
         }
 
-        if (j == m) { // Achou a sub_string
+        if (j == m) { // Achou a sub-string
             return true;
         }
     }

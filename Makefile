@@ -1,10 +1,14 @@
-all: obj/Programa.o obj/Tempo.o obj/Forca_Bruta.o obj/BMH.o obj/KMP.o
-	gcc obj/Programa.o obj/Tempo.o obj/Forca_Bruta.o obj/BMH.o obj/KMP.o -o tp3
+all: obj/Programa.o obj/Argumentos.o obj/Tempo.o obj/Forca_Bruta.o obj/BMH.o obj/KMP.o
+	gcc obj/Programa.o obj/Argumentos.o obj/Tempo.o obj/Forca_Bruta.o obj/BMH.o obj/KMP.o -o tp3
 	mv tp3 bin/
 
 obj/Programa.o: src/Programa.c
 	gcc -c src/Programa.c
 	mv Programa.o obj/
+
+obj/Argumentos.o: src/Argumentos.c 
+	gcc -c src/Argumentos.c 
+	mv Argumentos.o obj/
 
 obj/Tempo.o: src/Tempo.c include/Tempo.h
 	gcc src/Tempo.c -c
@@ -22,6 +26,11 @@ obj/KMP.o: src/KMP.c
 	gcc src/KMP.c -c
 	mv KMP.o obj/
 
-delete:
+apagar_tudo:
 	rm obj/*.o
+	rm bin/*
+
+entrega:
+	rm obj/*.o
+	rm data/*
 	rm bin/*

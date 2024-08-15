@@ -1,6 +1,6 @@
 #include "../include/Forca_Bruta.h"
 
-bool forca_Bruta(char *string, char *sub_string, int ini_intervalo, int fim_intervalo){
+bool Forca_Bruta(char *string, char *sub_string, int ini_intervalo, int fim_intervalo){
     int tam_string = strlen(string);
     int tam_sub_string = strlen(sub_string);
 

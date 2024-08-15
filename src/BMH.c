@@ -1,6 +1,6 @@
 #include "../include/BMH.h"
 
-bool bmh(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
+bool BMH(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     int m = strlen(sub_string);
     int n = fim_intervalo - ini_intervalo + 1;
 
@@ -14,6 +14,8 @@ bool bmh(char *string, char *sub_string, int ini_intervalo, int fim_intervalo) {
     for (int i = 0; i < ALFABETO; ++i) {
         d[i] = m;
     }
+
+
     for (int i = 0; i < m - 1; ++i) {
         d[(unsigned char)sub_string[i]] = m - i - 1;
     }
