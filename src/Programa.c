@@ -4,6 +4,8 @@
 
 #include "../include/Tempo.h"
 #include "../include/Forca_Bruta.h"
+#include "../include/BMH.h"
+#include "../include/KMP.h"
 
 #define CAMINHO_ARQ_SAIDA "data/saida.txt"
 
@@ -16,22 +18,26 @@ bool fechar_Arquivos(FILE **arquivo_entrada, FILE **arquivo_saida);
 
 int main(int argc, char *argv[]){
 
+  // Criacao de variaveis
+  struct timeval ini_tempo_total, fim_tempo_total;
+  struct rusage inicio, fim;
+
   char tipo, *caminho_arq_entrada;
   FILE *arquivo_entrada, *arquivo_saida;
 
   char string[N], sub_string[M];
   int K, inicio_intervalo, fim_intervalo;
 
+  // Testando se os argumentos foram passados corretamente
   if(!receber_Argumentos(argc, argv, &tipo, &caminho_arq_entrada))
     return 1;
 
+  // Testando se o arquivo de entrada existe
   if(!abrir_Arquivos(&caminho_arq_entrada, &arquivo_entrada, &arquivo_saida))
     return 1;
 
-  struct timeval ini_tempo_total, fim_tempo_total;
-  struct rusage inicio, fim;
-
-  iniciar_contagem(&ini_tempo_total, &inicio);
+  // Inicio da cronometragem
+  iniciar_contagem(&ini_tempo_total, &inicio); 
 
   fscanf(arquivo_entrada, "%s", string);
   fscanf(arquivo_entrada, "%s", sub_string);
@@ -42,31 +48,43 @@ int main(int argc, char *argv[]){
     fscanf(arquivo_entrada, "%d", &inicio_intervalo);
     fscanf(arquivo_entrada, "%d", &fim_intervalo);
 
+    inicio_intervalo -= 1;
+    fim_intervalo -= 1;
+
     bool resultado = false;
 
     switch (tipo) {
-      case 'B':
-        resultado = forca_Bruta(string, sub_string, --inicio_intervalo, --fim_intervalo);
+      case 'F': // Forca bruta
+        resultado = forca_Bruta(string, sub_string, inicio_intervalo, fim_intervalo);
         break;
-      
-      default:
-        printf("Esse método não existe ainda!\n");
+
+      case 'B': // BMH
+        resultado = bmh(string, sub_string, inicio_intervalo, fim_intervalo); // 2 erro aqui
+        break;
+
+      case 'K':
+        resultado = kmp(string, sub_string, inicio_intervalo, fim_intervalo);
+        break;
+
+      default: // Algum erro aqui
+        printf("Esse método não existe!");
+        parar_contagem(&fim_tempo_total, &fim); 
+        fechar_Arquivos(&arquivo_entrada, &arquivo_saida);        
         return 1;
-        break;
     }
 
     if(resultado)
-      printf("sim\n");
+      fprintf(arquivo_saida, "sim\n");
+    
     else
-      printf("nao\n");
-
+      fprintf(arquivo_saida, "nao\n");
 
   }
 
-  parar_contagem(&fim_tempo_total, &fim);
-  printar_tempo_gasto(&ini_tempo_total, &inicio, &fim_tempo_total, &fim);
+  parar_contagem(&fim_tempo_total, &fim); // Termina a cronometragem
+  printar_tempo_gasto(&ini_tempo_total, &inicio, &fim_tempo_total, &fim); // Imprime os tempos no terminal
 
-  fechar_Arquivos(&arquivo_entrada, &arquivo_saida);
+  fechar_Arquivos(&arquivo_entrada, &arquivo_saida); // Fecha os arquivos
 
   return 0;
 }
@@ -82,14 +100,20 @@ bool receber_Argumentos(int argc, char *argv[], char *tipo, char **caminho_arq_e
 
   *tipo = argv[1][0];
 
-  if (*tipo == 'B' || *tipo == 'b') {
+  if (*tipo == 'F' || *tipo == 'f') {
+    *tipo = 'F';
+
+  } else if (*tipo == 'B' || *tipo == 'b') {
     *tipo = 'B';
 
-  } else if (*tipo == 'A' || *tipo == 'a') {
-    *tipo = 'a';
+  } else if (*tipo == 'K' || *tipo == 'k') {
+    *tipo = 'K';
 
   } else {
-    printf("Erro! Use apenas A ou B para indicar o método.\n");
+    printf("Erro. Esse metodo nao existe! \nApenas os seguintes algoritmos foram implementados: \n");
+    printf("+  'F' ou 'f': Forca Bruta \n");
+    printf("+  'B' ou 'b': Boyer-Moore-Horspool \n");
+    printf("+  'K' ou 'k': Knuth-Morris-Pratt \n");
     return false;
   }
 

@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h> // Foi usado apenas o strlen() 
 
-bool forca_Bruta(char *string,char *sub_string, int ini_intervalo, int fim_intervalo);
+bool forca_Bruta(char *string, char *sub_string, int ini_intervalo, int fim_intervalo);
 
 
 #endif
